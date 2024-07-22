@@ -41,9 +41,9 @@ function RoomLayout() {
     setRoomId(getRoomId(window.location.pathname));
 
     ref.current.peer = new Peer(undefined, {
-      host: "localhost",
-      port: "4000",
-      secure: false,
+      host: "video-chat-server-virid.vercel.app",
+      port: "443",
+      secure: true,
     });
 
     ref.current.socket = io();
@@ -127,7 +127,6 @@ function RoomLayout() {
 
   const connectToNewUser = (userId, name, stream, peer, socket) => {
     const call = peer.call(userId, stream);
-    console.log("### call", call);
     let info, recStream;
 
     socket.on("get-info", (srcId, destId, username, streamInfo) => {
