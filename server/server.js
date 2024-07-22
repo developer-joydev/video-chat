@@ -7,20 +7,23 @@ const { Server } = require("socket.io");
 const app = express();
 const server = http.createServer(app);
 
-const ExpressPeerServer = require('peer').ExpressPeerServer;
+const ExpressPeerServer = require("peer").ExpressPeerServer;
 const peerServer = ExpressPeerServer(server, {
-  debug: true
+  debug: true,
 });
 
-app.use('/peerjs', peerServer);
+const corsOptions = {
+  origin: "*",
+  methods: "GET,POST",
+};
+
+app.use("/peerjs", peerServer);
 
 const io = new Server(server, {
-  cors: {
-    origin: "*",
-  },
+  cors: corsOptions,
 });
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {
