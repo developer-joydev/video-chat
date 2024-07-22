@@ -3,14 +3,17 @@ const http = require("http");
 const path = require("path");
 const cors = require("cors");
 const { Server } = require("socket.io");
+const { PeerServer } = require("peer");
 
 const app = express();
 const server = http.createServer(app);
 
-const ExpressPeerServer = require("peer").ExpressPeerServer;
-const peerServer = ExpressPeerServer(server, {
-  debug: true,
-});
+// const ExpressPeerServer = require("peer").ExpressPeerServer;
+// const peerServer = ExpressPeerServer(server, {
+//   debug: true,
+// });
+
+const peerServer = PeerServer({ port: 443 });
 
 const corsOptions = {
   origin: "*",
@@ -44,7 +47,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-io.on("connection", (socket) => {
+peerServer.on("connection", (socket) => {
   console.log("Connected");
 
   let currUserId, currUserName, currRoom;
