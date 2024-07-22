@@ -44,7 +44,6 @@ function RoomLayout() {
       host: "video-chat-server-virid.vercel.app",
       port: "443",
       secure: true,
-      path: "/peerjs",
     });
 
     ref.current.socket = io();
